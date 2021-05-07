@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package fileinfo;
+
+service FileInfoService {
+  // show all files recursively from name of File Info
+  rpc getFileInfos (FileInfo) returns (FileInfoList) {}
+  
+  // create the File Info 
+  rpc createFileInfo(FileInfo) returns (FileInfo) {}
+
+  // remove the File Info by name
+  rpc removeFileInfo(FileInfo) returns (Empty) {}
+
+  // get stats (date, size, last changed) from File Info
+  rpc getStatsFileInfo(FileInfo) returns (StatsFile) {}
+}
+
+message Empty {}
+
+message FileMode {
+  string name = 1;
+}
+
+message FileInfo {
+  string name = 1;
+  int64 size = 2;
+  string modTime = 3;
+  FileMode mod = 4;
+  bool isDir = 5;
+}
+
+message FileInfoList {
+  repeated FileInfo fileinfos = 1;
+}
+
+message StatsFile {
+  string name = 1;
+  string date = 2;
+  int64 size = 3;
+  string lastchanged = 4;
+}
